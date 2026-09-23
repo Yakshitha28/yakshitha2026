@@ -91,30 +91,30 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onExploreProjects }) =
           style={{ backgroundImage: `url(${PERSONAL_INFO.heroBgImage})` }}
         />
 
-        {/* PROMINENT DEVELOPER PHOTO IN THE BACKGROUND WITH SMOOTH ANIMATION */}
-        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-3/5 h-full flex items-center justify-center lg:justify-end overflow-hidden">
+        {/* PROMINENT DEVELOPER PHOTO IN THE EXACT MIDDLE OF THE WHOLE SCREEN IN THE BACKGROUND */}
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none">
           <div
-            className="w-full h-full max-w-3xl bg-contain lg:bg-cover bg-top lg:bg-[center_top_12%] bg-no-repeat opacity-65 lg:opacity-85 filter contrast-[1.04] saturate-[1.02] animate-hero-photo transition-all duration-1000 ease-out"
+            className="w-full max-w-5xl h-full bg-contain bg-center bg-no-repeat opacity-50 sm:opacity-60 lg:opacity-65 filter contrast-[1.05] brightness-95 animate-hero-photo transition-all duration-1000 ease-out"
             style={{
               backgroundImage: `url(${photoUrl})`,
-              maskImage: 'radial-gradient(ellipse 90% 85% at 65% 42%, black 45%, transparent 80%)',
-              WebkitMaskImage: 'radial-gradient(ellipse 90% 85% at 65% 42%, black 45%, transparent 80%)',
+              maskImage: 'radial-gradient(ellipse 75% 75% at 50% 45%, black 45%, transparent 85%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 75% 75% at 50% 45%, black 45%, transparent 85%)',
             }}
           />
         </div>
 
-        {/* Soft atmospheric depth glow from the developer portrait */}
+        {/* Soft atmospheric depth glow from the developer portrait in the center */}
         <div
-          className="absolute right-10 top-1/4 w-[650px] h-[650px] rounded-full filter blur-[150px] opacity-25 bg-cover bg-center animate-ambient-pulse"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full filter blur-[160px] opacity-25 bg-cover bg-center animate-ambient-pulse"
           style={{ backgroundImage: `url(${photoUrl})` }}
         />
 
         {/* Precision cyber grid overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] opacity-50" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] opacity-40" />
 
-        {/* Deep dark cinematic vignette overlays for absolute contrast and text legibility on the left column */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0c] via-[#0a0a0c]/85 to-transparent lg:via-[#0a0a0c]/50" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0c]/90 via-transparent to-[#0a0a0c]" />
+        {/* Deep dark cinematic vignette overlays for absolute contrast and text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0c]/90 via-[#0a0a0c]/40 to-[#0a0a0c]/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0c]/85 via-transparent to-[#0a0a0c]" />
 
         {/* Centered & Balanced ambient glowing orbs */}
         <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[160px]" />
@@ -193,7 +193,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onExploreProjects }) =
               <span className="text-zinc-600">·</span>
               <div className="flex items-center gap-1.5 text-zinc-300">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                <span>Campus Brew Cafe</span>
+                <span>Café Caresse</span>
               </div>
               <span className="text-zinc-600">·</span>
               <div className="flex items-center gap-1.5 text-zinc-300">
@@ -261,7 +261,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onExploreProjects }) =
             </div>
           </div>
 
-          {/* Right Column: Sleek Glassmorphic HUD & Controls (Background Photo is Unobstructed & Visible) */}
+          {/* Right Column: Hero Portrait Card with Direct Photo Display & Upload Controls */}
           <div className="lg:col-span-5 flex flex-col justify-center items-center lg:items-end relative">
             {/* Hidden file input for photo upload */}
             <input
@@ -273,72 +273,99 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onExploreProjects }) =
               aria-label="Upload photo"
             />
 
-            {/* Glassmorphic Info & Control Showcase */}
-            <div className="w-full max-w-[360px] sm:max-w-[380px] space-y-4 animate-smooth-float">
-              {/* Photo Controls Bar */}
-              <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#0e111a]/70 backdrop-blur-xl border border-white/15 shadow-2xl">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping" />
-                  <span className="text-xs font-mono text-cyan-300 font-medium">Portrait Background Active</span>
-                </div>
+            <div className="w-full max-w-[360px] sm:max-w-[390px] space-y-4 animate-smooth-float">
+              {/* Portrait Frame Card */}
+              <div className="relative rounded-3xl p-3 bg-gradient-to-b from-white/12 via-white/[0.04] to-white/[0.02] border border-white/20 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] backdrop-blur-2xl group">
+                {/* Decorative ambient aura behind the card */}
+                <div className="absolute -inset-1 bg-gradient-to-tr from-cyan-500/25 via-sky-400/15 to-transparent rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    title="Upload your own photo"
-                    className="px-3 py-1.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-400 text-cyan-300 hover:text-zinc-950 text-xs font-semibold border border-cyan-400/30 hover:border-cyan-400 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer shadow-sm"
-                  >
-                    <Camera className="w-3.5 h-3.5" />
-                    <span>Upload Photo</span>
-                  </button>
+                {/* Picture Frame */}
+                <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-zinc-950 border border-white/15">
+                  <img
+                    src={photoUrl}
+                    alt="Yakshitha Sri N D - Computer Science Undergraduate and Web Developer"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover object-top filter contrast-[1.03] transition-all duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      const parent = e.currentTarget.parentElement;
+                      if (parent) {
+                        const fallback = parent.querySelector('.photo-fallback');
+                        if (fallback) (fallback as HTMLElement).style.display = 'flex';
+                      }
+                    }}
+                  />
 
-                  {hasCustomPhoto && (
+                  {/* Resilient fallback container */}
+                  <div className="photo-fallback hidden absolute inset-0 flex-col items-center justify-center bg-gradient-to-br from-zinc-900 via-zinc-950 to-cyan-950/40 p-6 text-center">
+                    <div className="w-20 h-20 rounded-full bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-300 font-display text-2xl font-bold mb-3">
+                      YS
+                    </div>
+                    <h3 className="text-white font-bold text-lg">{PERSONAL_INFO.name}</h3>
+                    <p className="text-xs text-zinc-400 mt-1">{PERSONAL_INFO.title}</p>
+                  </div>
+
+                  {/* TOP CONTROLS: Upload Photo & Reset */}
+                  <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5">
                     <button
-                      onClick={handleResetPhoto}
-                      title="Reset to default portrait"
-                      className="p-1.5 rounded-xl bg-white/5 hover:bg-red-500/20 text-zinc-400 hover:text-red-300 border border-white/10 transition-colors"
+                      onClick={() => fileInputRef.current?.click()}
+                      title="Upload your own photo"
+                      className="px-3 py-1.5 rounded-full bg-black/80 hover:bg-cyan-400 text-white hover:text-zinc-950 text-xs font-semibold backdrop-blur-md border border-white/25 hover:border-cyan-400 transition-all duration-200 shadow-xl flex items-center gap-1.5 group/upload active:scale-95 cursor-pointer"
                     >
-                      <RotateCcw className="w-3.5 h-3.5" />
+                      <Camera className="w-3.5 h-3.5 text-cyan-400 group-hover/upload:text-zinc-950 transition-colors" />
+                      <span className="text-[11px] tracking-tight">Upload Photo</span>
                     </button>
+
+                    {hasCustomPhoto && (
+                      <button
+                        onClick={handleResetPhoto}
+                        title="Reset to default portrait"
+                        className="p-1.5 rounded-full bg-black/80 hover:bg-red-500/80 text-zinc-300 hover:text-white backdrop-blur-md border border-white/20 transition-all duration-200 active:scale-95"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Toast Notification when Photo Uploaded */}
+                  {uploadToast && (
+                    <div className="absolute top-12 right-3 z-40 px-3 py-1.5 rounded-lg bg-cyan-950/95 border border-cyan-400 text-cyan-300 text-[11px] font-medium shadow-2xl backdrop-blur-md animate-in fade-in slide-in-from-top-2 duration-200 flex items-center gap-1.5">
+                      <Check className="w-3 h-3 text-cyan-400" />
+                      <span>{uploadToast}</span>
+                    </div>
                   )}
+
+                  {/* Bottom subtle gradient vignette */}
+                  <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
+
+                  {/* Floating caption on portrait */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs backdrop-blur-md bg-black/70 border border-white/10 rounded-xl px-3.5 py-2.5">
+                    <div>
+                      <p className="font-semibold text-white">{PERSONAL_INFO.name}</p>
+                      <p className="text-[11px] text-cyan-300">SRM University · CSE Core</p>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[10px] font-mono">
+                      2026–2030
+                    </span>
+                  </div>
+                </div>
+
+                {/* Floating Creative Developer Accent Badge */}
+                <div className="absolute -top-3 -left-3 px-3 py-1.5 rounded-xl bg-[#12141c]/95 border border-cyan-500/40 shadow-lg text-[11px] font-medium text-cyan-300 flex items-center gap-1.5 backdrop-blur-md">
+                  <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Creative Developer</span>
                 </div>
               </div>
 
-              {/* Toast Notification when Photo Uploaded */}
-              {uploadToast && (
-                <div className="p-3 rounded-xl bg-cyan-950/95 border border-cyan-400 text-cyan-300 text-xs font-medium shadow-2xl backdrop-blur-md flex items-center gap-2 animate-in fade-in slide-in-from-top-2">
-                  <Check className="w-4 h-4 text-cyan-400" />
-                  <span>{uploadToast}</span>
+              {/* Quick Academic & Availability Badges */}
+              <div className="grid grid-cols-1 gap-2">
+                <div className="p-3 rounded-2xl bg-emerald-950/30 backdrop-blur-xl border border-emerald-500/30 flex items-center justify-between shadow-xl">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-xs text-emerald-300 font-medium">Available for Opportunities</span>
+                  </div>
+                  <span className="text-[11px] font-mono text-zinc-400">Chennai, India</span>
                 </div>
-              )}
-
-              {/* Glass Stat Card 1: Academic Standing */}
-              <div className="p-4 rounded-2xl bg-[#0e111a]/60 backdrop-blur-xl border border-white/10 hover:border-cyan-400/40 transition-all shadow-xl group">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-mono text-cyan-400 uppercase tracking-wider">Education Core</span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-400/15 text-cyan-300 border border-cyan-400/30">2026–2030</span>
-                </div>
-                <h4 className="font-semibold text-white text-sm">SRM Institute of Science and Technology</h4>
-                <p className="text-xs text-zinc-400 mt-0.5">B.Tech Computer Science & Engineering (Core)</p>
-              </div>
-
-              {/* Glass Stat Card 2: Featured Development */}
-              <div className="p-4 rounded-2xl bg-[#0e111a]/60 backdrop-blur-xl border border-white/10 hover:border-amber-400/40 transition-all shadow-xl">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-mono text-amber-400 uppercase tracking-wider">Featured Systems</span>
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                </div>
-                <h4 className="font-semibold text-white text-sm">L'Amore Restaurant & Campus Brew</h4>
-                <p className="text-xs text-zinc-400 mt-0.5">Modern Web Platforms · Responsive Architecture</p>
-              </div>
-
-              {/* Glass Stat Card 3: Availability Badge */}
-              <div className="p-3.5 rounded-2xl bg-emerald-950/20 backdrop-blur-xl border border-emerald-500/30 flex items-center justify-between shadow-xl">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-xs text-emerald-300 font-medium">Available for Opportunities</span>
-                </div>
-                <span className="text-[11px] font-mono text-zinc-400">Chennai, India</span>
               </div>
             </div>
           </div>

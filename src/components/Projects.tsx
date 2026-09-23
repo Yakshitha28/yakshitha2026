@@ -77,7 +77,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   : 'text-zinc-400 hover:text-white'
               }`}
             >
-              Campus Brew Cafe
+              Café Caresse
             </button>
           </div>
         </div>

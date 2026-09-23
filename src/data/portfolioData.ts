@@ -159,7 +159,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'student-cafe',
-    title: 'Campus Brew — Student Friendly Cafe',
+    title: 'Café Caresse — Student Friendly Cafe',
     tagline: 'Atmospheric digital storefront & reservation interface',
     badge: 'Core Web Project · Campus Community',
     featured: false,

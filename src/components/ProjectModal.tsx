@@ -366,7 +366,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                 <Coffee className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
                 <div className="text-xs space-y-1">
                   <p className="font-semibold text-cyan-300">
-                    Campus Brew — Student Friendly Cafe Showcase
+                    Café Caresse — Student Friendly Cafe Showcase
                   </p>
                   <p className="text-zinc-400">
                     Designed to provide SRM undergraduates with instant pricing transparency, cozy study zone reservations, and quick pick-up combos.

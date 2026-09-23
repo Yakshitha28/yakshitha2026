@@ -138,7 +138,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             {/* Cafe */}
             <div className="space-y-1">
               <div className="flex justify-between items-baseline text-sm font-bold text-white print:text-black">
-                <span>Campus Brew — Student Friendly Cafe Website</span>
+                <span>Café Caresse — Student Friendly Cafe Website</span>
                 <span className="text-xs font-mono text-zinc-400 print:text-zinc-600">HTML5 · CSS3</span>
               </div>
               <ul className="list-disc list-inside text-xs text-zinc-400 print:text-zinc-800 space-y-1 pt-0.5">
