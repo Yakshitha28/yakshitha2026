@@ -56,7 +56,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               {PERSONAL_INFO.name}
             </h1>
             <p className="text-sm font-medium text-cyan-400 print:text-zinc-700">
-              Computer Science Undergraduate · Systems & Web Developer
+              Computer Science Undergraduate & Web Developer
             </p>
             <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-zinc-400 font-mono print:text-zinc-600 pt-1">
               <a href={`mailto:${PERSONAL_INFO.email}`} className="hover:text-cyan-300 transition-colors">
@@ -79,7 +79,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               PROFESSIONAL PROFILE
             </h2>
             <p className="text-xs sm:text-sm text-zinc-300 print:text-zinc-800 leading-relaxed">
-              First-year Computer Science and Engineering (Core) student at SRM University with a strong foundation in programming and problem solving. Skilled in Python, HTML and CSS, with hands-on project experience through a student friendly cafe website and a food ordering website. Interested in core computer science areas such as programming, data structures and software development, and eager to apply my skills to real-world engineering problems.
+              First-year Computer Science and Engineering (Core) student at SRM University with a strong foundation in programming and problem solving. Skilled in Python, HTML5, CSS3 and JavaScript, with hands-on project experience through L'Amore Restaurant dining portal and a student friendly cafe website. Interested in core computer science areas such as programming, data structures and software development, and eager to apply my skills to real-world engineering problems.
             </p>
           </div>
 
@@ -114,50 +114,37 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           {/* Projects */}
           <div className="space-y-4">
             <h2 className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-bold print:text-black border-b border-white/10 print:border-black/20 pb-1">
-              PROJECTS & HACKATHON INNOVATIONS
+              FEATURED PROJECTS & SOFTWARE ARCHITECTURE
             </h2>
 
-            {/* CodeRed */}
+            {/* L'Amore Restaurant */}
             <div className="space-y-1">
               <div className="flex justify-between items-baseline text-sm font-bold text-white print:text-black">
                 <span className="flex items-center gap-1.5">
-                  <span>CodeRed — Crisis Surge Simulator</span>
-                  <span className="text-[10px] font-mono font-normal px-1.5 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/30 print:border-black print:text-black">
-                    VIT Hackathon Resonance 1.0
+                  <span>L'Amore Restaurant — Dining Portal & Reservation Platform</span>
+                  <span className="text-[10px] font-mono font-normal px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 print:border-black print:text-black">
+                    Featured Project
                   </span>
                 </span>
-                <span className="text-xs font-mono text-zinc-400 print:text-zinc-600">Python · Web Sim</span>
+                <span className="text-xs font-mono text-zinc-400 print:text-zinc-600">HTML5 · CSS3 · JavaScript</span>
               </div>
               <ul className="list-disc list-inside text-xs text-zinc-400 print:text-zinc-800 space-y-1 pt-0.5">
-                <li>Designed and built a hospital triage & emergency surge simulator modeling casualty inflows during disasters.</li>
-                <li>Engineered real-time algorithmic bed reallocation, reducing critical bay starvation by dynamic patient re-routing.</li>
-                <li>Created dark glassmorphic dashboard monitoring ICU saturation, ventilator demand, and triage severity queues.</li>
+                <li>Architected an elegant culinary dining website featuring interactive course-by-course menu navigation and wine pairing recommendations.</li>
+                <li>Engineered a dynamic table reservation flow supporting guest party sizing, seating zone selection (Indoor, Terrace, Private Booth), and booking verification.</li>
+                <li>Crafted a responsive luxury aesthetic with modern CSS grid layouts, smooth micro-interactions, and accessible typography.</li>
               </ul>
             </div>
 
             {/* Cafe */}
             <div className="space-y-1">
               <div className="flex justify-between items-baseline text-sm font-bold text-white print:text-black">
-                <span>Student Friendly Cafe Website</span>
-                <span className="text-xs font-mono text-zinc-400 print:text-zinc-600">HTML, CSS</span>
+                <span>Campus Brew — Student Friendly Cafe Website</span>
+                <span className="text-xs font-mono text-zinc-400 print:text-zinc-600">HTML5 · CSS3</span>
               </div>
               <ul className="list-disc list-inside text-xs text-zinc-400 print:text-zinc-800 space-y-1 pt-0.5">
                 <li>Designed and built a website for a student friendly cafe with a simple, welcoming layout.</li>
-                <li>Structured the pages with clean HTML so the menu and cafe details are easy to find.</li>
+                <li>Structured the pages with clean semantic HTML so the menu and cafe details are easy to find.</li>
                 <li>Styled the site with CSS to give it a consistent look and a comfortable reading experience.</li>
-              </ul>
-            </div>
-
-            {/* Food Ordering */}
-            <div className="space-y-1">
-              <div className="flex justify-between items-baseline text-sm font-bold text-white print:text-black">
-                <span>Food Ordering Website</span>
-                <span className="text-xs font-mono text-zinc-400 print:text-zinc-600">HTML, CSS, JavaScript</span>
-              </div>
-              <ul className="list-disc list-inside text-xs text-zinc-400 print:text-zinc-800 space-y-1 pt-0.5">
-                <li>Designed a food ordering website that lets users browse dishes and order food.</li>
-                <li>Organised food items into clear sections so users can quickly find what they want.</li>
-                <li>Styled the pages with CSS to keep the interface clean and easy to use.</li>
               </ul>
             </div>
           </div>

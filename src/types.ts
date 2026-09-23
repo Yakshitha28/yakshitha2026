@@ -12,7 +12,7 @@ export interface Project {
   demoUrl: string;
   metrics?: { label: string; value: string }[];
   keyFeatures: string[];
-  interactiveType?: 'codered' | 'cafe' | 'food';
+  interactiveType?: 'lamore' | 'cafe' | 'web';
 }
 
 export interface RoadmapStep {
@@ -31,7 +31,7 @@ export interface Certification {
   date: string;
   credentialUrl?: string;
   skills: string[];
-  category: 'Hackathon' | 'University' | 'Engineering' | 'Systems';
+  category: 'University' | 'Engineering' | 'Systems' | 'Web';
 }
 
 export interface TechItem {

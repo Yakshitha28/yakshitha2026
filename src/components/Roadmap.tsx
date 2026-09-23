@@ -144,7 +144,7 @@ export const Roadmap: React.FC = () => {
               </div>
 
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Applied directly in projects like <span className="text-white font-medium">CodeRed</span> to coordinate triage algorithms, stress tests, and bed saturation models before hospital hackathon judging.
+                Applied directly in projects like <span className="text-white font-medium">L'Amore Restaurant</span> to optimize interactive table reservation workflows, responsive menu discovery, and multi-device performance.
               </p>
 
               <div className="flex items-center justify-between pt-2">

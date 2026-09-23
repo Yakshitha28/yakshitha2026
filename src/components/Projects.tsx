@@ -4,7 +4,6 @@ import {
   Github,
   Sparkles,
   ArrowUpRight,
-  Activity,
   Layers,
   Terminal,
   Eye
@@ -17,11 +16,11 @@ interface ProjectsProps {
 }
 
 export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
-  const [filter, setFilter] = useState<'all' | 'sim' | 'web'>('all');
+  const [filter, setFilter] = useState<'all' | 'lamore' | 'cafe'>('all');
 
   const filteredProjects = PROJECTS.filter((p) => {
-    if (filter === 'sim') return p.interactiveType === 'codered';
-    if (filter === 'web') return p.interactiveType !== 'codered';
+    if (filter === 'lamore') return p.id === 'lamore-restaurant';
+    if (filter === 'cafe') return p.id === 'student-cafe';
     return true;
   });
 
@@ -41,10 +40,10 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
               </span>
             </div>
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-              Featured Projects & Systems
+              Featured Projects & Web Architecture
             </h2>
             <p className="text-zinc-400 text-base leading-relaxed">
-              Showcasing low-level simulation logic, crisis triage algorithms, and modern responsive web applications built with clean code principles.
+              Showcasing modern responsive web applications, interactive dining and reservation platforms, and clean UI/UX craftsmanship.
             </p>
           </div>
 
@@ -61,24 +60,24 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
               All Projects ({PROJECTS.length})
             </button>
             <button
-              onClick={() => setFilter('sim')}
+              onClick={() => setFilter('lamore')}
               className={`px-3.5 py-1.5 text-xs font-medium rounded-lg transition-all ${
-                filter === 'sim'
-                  ? 'bg-white/10 text-cyan-300 shadow-sm'
+                filter === 'lamore'
+                  ? 'bg-white/10 text-amber-300 shadow-sm'
                   : 'text-zinc-400 hover:text-white'
               }`}
             >
-              Simulation & Systems
+              L'Amore Restaurant
             </button>
             <button
-              onClick={() => setFilter('web')}
+              onClick={() => setFilter('cafe')}
               className={`px-3.5 py-1.5 text-xs font-medium rounded-lg transition-all ${
-                filter === 'web'
+                filter === 'cafe'
                   ? 'bg-white/10 text-cyan-300 shadow-sm'
                   : 'text-zinc-400 hover:text-white'
               }`}
             >
-              Web Platforms
+              Campus Brew Cafe
             </button>
           </div>
         </div>
@@ -95,7 +94,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   isFeatured ? 'lg:col-span-12 bg-[#0e111a]/80' : 'lg:col-span-6 bg-[#0c0e14]/70'
                 }`}
               >
-                {/* For Featured (CodeRed), use a horizontal split showcase on large screens */}
+                {/* For Featured (L'Amore), use a horizontal split showcase on large screens */}
                 <div
                   className={`grid ${
                     isFeatured ? 'grid-cols-1 lg:grid-cols-12' : 'grid-cols-1'
@@ -120,7 +119,11 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                     {/* Top Pill / Badge */}
                     <div className="absolute top-4 left-4 flex items-center gap-2">
                       <span className="px-3 py-1 rounded-full text-xs font-mono font-medium backdrop-blur-md bg-black/70 border border-white/15 text-white flex items-center gap-1.5">
-                        {isFeatured && <Activity className="w-3.5 h-3.5 text-red-400 animate-pulse" />}
+                        {isFeatured ? (
+                          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                        ) : (
+                          <Layers className="w-3.5 h-3.5 text-cyan-400" />
+                        )}
                         {project.badge}
                       </span>
                     </div>
@@ -131,7 +134,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                       className="absolute bottom-4 right-4 px-3.5 py-1.5 rounded-xl bg-black/70 hover:bg-cyan-500/90 text-white hover:text-zinc-950 text-xs font-medium backdrop-blur-md border border-white/15 transition-all opacity-0 group-hover:opacity-100 flex items-center gap-1.5"
                     >
                       <Eye className="w-3.5 h-3.5" />
-                      <span>{isFeatured ? 'Launch Live Crisis Sim' : 'Inspect Case Study'}</span>
+                      <span>{isFeatured ? "Explore L'Amore Portal" : 'Inspect Case Study'}</span>
                     </button>
                   </div>
 
@@ -204,11 +207,11 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                         onClick={() => onSelectProject(project)}
                         className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 active:scale-95 ${
                           isFeatured
-                            ? 'bg-gradient-to-r from-cyan-400 to-sky-300 text-zinc-950 hover:from-cyan-300 hover:to-sky-200 shadow-[0_0_20px_-5px_rgba(56,189,248,0.4)]'
+                            ? 'bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200 text-zinc-950 shadow-[0_0_20px_-5px_rgba(251,191,36,0.4)]'
                             : 'bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10'
                         }`}
                       >
-                        <span>{isFeatured ? 'Launch Live Sim' : 'View Details'}</span>
+                        <span>{isFeatured ? "Explore L'Amore" : 'View Details'}</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
                       </button>
                     </div>

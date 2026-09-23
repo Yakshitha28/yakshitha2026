@@ -13,7 +13,6 @@ import {
   Eye,
   Zap,
   TerminalSquare,
-  Activity,
   Layers,
   Database
 } from 'lucide-react';
@@ -34,7 +33,6 @@ const iconMap: Record<string, React.ReactNode> = {
   Eye: <Eye className="w-4 h-4 text-cyan-300" />,
   Zap: <Zap className="w-4 h-4 text-yellow-400" />,
   TerminalSquare: <TerminalSquare className="w-4 h-4 text-slate-300" />,
-  Activity: <Activity className="w-4 h-4 text-red-400" />,
   Layers: <Layers className="w-4 h-4 text-cyan-400" />,
   Database: <Database className="w-4 h-4 text-emerald-400" />,
 };

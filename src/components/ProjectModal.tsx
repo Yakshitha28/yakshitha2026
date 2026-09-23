@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
-import { X, ExternalLink, Github, Sparkles, Activity, AlertTriangle, ShieldCheck, Check, Layers, RefreshCw } from 'lucide-react';
+import {
+  X,
+  ExternalLink,
+  Github,
+  Sparkles,
+  UtensilsCrossed,
+  Wine,
+  Calendar,
+  Users,
+  Clock,
+  Check,
+  Coffee,
+  MapPin,
+  BookmarkCheck
+} from 'lucide-react';
 import { Project } from '../types';
 
 interface ProjectModalProps {
@@ -10,17 +24,36 @@ interface ProjectModalProps {
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   if (!project) return null;
 
-  // Simulator state for CodeRed
-  const [surgeLevel, setSurgeLevel] = useState<number>(3); // 1 to 5 scale
-  const [activeTab, setActiveTab] = useState<'overview' | 'simulator' | 'specs'>('overview');
-  const [bedRebalanced, setBedRebalanced] = useState(false);
+  const [activeTab, setActiveTab] = useState<'overview' | 'interactive' | 'specs'>('overview');
 
-  // Dynamic calculations for CodeRed simulator
-  const patientRate = surgeLevel * 24;
-  const criticalQueue = Math.max(2, Math.round(surgeLevel * 7.5));
-  const baseBedSaturation = Math.min(99, 45 + surgeLevel * 11);
-  const bedSaturation = bedRebalanced ? Math.max(35, baseBedSaturation - 18) : baseBedSaturation;
-  const ventilatorNeed = Math.min(100, 20 + surgeLevel * 14);
+  // Interactive state for L'Amore Restaurant
+  const [course, setCourse] = useState<'starters' | 'pasta' | 'entree' | 'dessert'>('entree');
+  const [partySize, setPartySize] = useState<number>(2);
+  const [seatingZone, setSeatingZone] = useState<'Veranda Terrace' | 'Main Dining Room' | "Chef's Wine Cellar">('Main Dining Room');
+  const [selectedTime, setSelectedTime] = useState<string>('19:30');
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
+
+  // Interactive state for Student Cafe
+  const [cafeCombo, setCafeCombo] = useState<'study' | 'lunch' | 'express'>('study');
+
+  const menuItems = {
+    starters: [
+      { name: 'Carpaccio di Manzo', desc: 'Truffle-infused prime tenderloin, aged parmigiano reggiano, wild arugula, caper berries', price: '$26' },
+      { name: 'Heirloom Burrata & Figs', desc: 'Pugliese burrata, mission figs, aged Modena balsamic, micro basil, toasted brioche', price: '$22' },
+    ],
+    pasta: [
+      { name: 'Tagliolini al Tartufo Bianco', desc: 'Hand-rolled egg pasta, French cultured butter, 24-month parmigiano, shaved Alba white truffle', price: '$44' },
+      { name: 'Lobster Agnolotti', desc: 'Maine lobster mousse, saffron seafood bisque, Meyer lemon emulsion, chive oil', price: '$38' },
+    ],
+    entree: [
+      { name: 'A5 Wagyu Striploin', desc: 'Miyazaki A5 beef, roasted bone marrow jus, glazed chanterelles, black garlic purée', price: '$68' },
+      { name: 'Pan-Roasted Mediterranean Branzino', desc: 'Crispy skin, fennel pollen, saffron braised leeks, citrus beurre blanc', price: '$42' },
+    ],
+    dessert: [
+      { name: 'Smoked Madagascar Vanilla Panna Cotta', desc: 'Passion fruit coulis, spun sugar crisp, edible gold leaf, Sicilian pistachio crumb', price: '$18' },
+      { name: 'L’Amore Signature Dark Chocolate Sphere', desc: '72% Valrhona ganache, hazelnut praline core, warm salted caramel pour', price: '$20' },
+    ],
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
@@ -33,7 +66,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
             <span className="text-xs font-mono uppercase tracking-wider text-cyan-300">
-              Project Case Study · {project.title.split('—')[0]}
+              Project Showcase · {project.title.split('—')[0]}
             </span>
           </div>
 
@@ -59,17 +92,31 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             Overview & Design
           </button>
 
-          {project.interactiveType === 'codered' && (
+          {project.id === 'lamore-restaurant' && (
             <button
-              onClick={() => setActiveTab('simulator')}
+              onClick={() => setActiveTab('interactive')}
               className={`pb-3 text-xs sm:text-sm font-medium transition-colors border-b-2 flex items-center gap-1.5 ${
-                activeTab === 'simulator'
-                  ? 'border-red-400 text-red-400'
+                activeTab === 'interactive'
+                  ? 'border-amber-400 text-amber-300'
                   : 'border-transparent text-zinc-400 hover:text-white'
               }`}
             >
-              <Activity className="w-3.5 h-3.5 text-red-400 animate-pulse" />
-              <span>Interactive Crisis Engine</span>
+              <UtensilsCrossed className="w-3.5 h-3.5 text-amber-400" />
+              <span>Interactive Dining & Reservation</span>
+            </button>
+          )}
+
+          {project.id === 'student-cafe' && (
+            <button
+              onClick={() => setActiveTab('interactive')}
+              className={`pb-3 text-xs sm:text-sm font-medium transition-colors border-b-2 flex items-center gap-1.5 ${
+                activeTab === 'interactive'
+                  ? 'border-cyan-400 text-cyan-300'
+                  : 'border-transparent text-zinc-400 hover:text-white'
+              }`}
+            >
+              <Coffee className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Campus Combos & Menu</span>
             </button>
           )}
 
@@ -81,7 +128,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                 : 'border-transparent text-zinc-400 hover:text-white'
             }`}
           >
-            Architecture & Highlights
+            Architecture & Features
           </button>
         </div>
 
@@ -153,112 +200,205 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             </div>
           )}
 
-          {activeTab === 'simulator' && project.interactiveType === 'codered' && (
+          {activeTab === 'interactive' && project.id === 'lamore-restaurant' && (
             <div className="space-y-6">
-              <div className="p-4 rounded-xl bg-red-950/30 border border-red-500/30 flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+              {/* Header Banner */}
+              <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3">
+                <Sparkles className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                 <div className="text-xs space-y-1">
-                  <p className="font-semibold text-red-300">
-                    VIT Hackathon Resonance 1.0 — Crisis Surge Engine (Live Prototype)
+                  <p className="font-semibold text-amber-300">
+                    L'Amore Restaurant — Interactive Guest Dining & Reservation Simulator
                   </p>
                   <p className="text-zinc-400">
-                    Adjust the catastrophe scale slider below to observe how CodeRed prioritizes critical trauma triage, predicts bed starvation, and reallocates emergency capacity.
+                    Explore curated course tiers, pairings, and customize a table booking with real-time seating capacity recalculations.
                   </p>
                 </div>
               </div>
 
-              {/* Slider Control */}
-              <div className="glass-card p-5 rounded-xl space-y-4 border border-white/10">
+              {/* Course Selector Tabs */}
+              <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-semibold text-white">
-                    Simulate Crisis Influx Level
-                  </label>
-                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/30">
-                    Stage {surgeLevel}: {['Baseline', 'Minor Incident', 'Mass Influx', 'Extreme Surge', 'Catastrophic Event'][surgeLevel - 1]}
+                  <span className="text-xs font-mono uppercase text-zinc-400">Curated Culinary Courses</span>
+                  <span className="text-xs text-amber-400 flex items-center gap-1 font-mono">
+                    <Wine className="w-3.5 h-3.5" /> Sommelier Pairing Available
                   </span>
                 </div>
-
-                <input
-                  type="range"
-                  min="1"
-                  max="5"
-                  value={surgeLevel}
-                  onChange={(e) => {
-                    setSurgeLevel(Number(e.target.value));
-                    setBedRebalanced(false);
-                  }}
-                  className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-red-500"
-                />
-
-                <div className="flex justify-between text-[11px] font-mono text-zinc-500">
-                  <span>1: Normal ER</span>
-                  <span>2: Moderate</span>
-                  <span>3: Resonance Sim</span>
-                  <span>4: Mass Casualty</span>
-                  <span>5: Critical Peak</span>
-                </div>
-              </div>
-
-              {/* Live Metric Gauges */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
-                  <span className="text-xs text-zinc-400 block font-mono">Patient Flow Rate</span>
-                  <span className="text-2xl font-bold text-white font-display mt-1">
-                    {patientRate} / hr
-                  </span>
-                  <span className="text-[11px] text-red-400 mt-1 block">
-                    +{surgeLevel * 80}% over baseline
-                  </span>
-                </div>
-
-                <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
-                  <span className="text-xs text-zinc-400 block font-mono">ICU Bed Saturation</span>
-                  <div className="flex items-baseline gap-2 mt-1">
-                    <span
-                      className={`text-2xl font-bold font-display ${
-                        bedSaturation > 85 ? 'text-red-400' : 'text-amber-300'
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {(['starters', 'pasta', 'entree', 'dessert'] as const).map((c) => (
+                    <button
+                      key={c}
+                      onClick={() => setCourse(c)}
+                      className={`p-2.5 rounded-xl text-xs font-semibold capitalize border transition-all ${
+                        course === c
+                          ? 'bg-amber-400/20 text-amber-200 border-amber-400/50 shadow-sm'
+                          : 'bg-white/[0.03] text-zinc-400 border-white/5 hover:text-white'
                       }`}
                     >
-                      {bedSaturation}%
-                    </span>
-                    {bedRebalanced && (
-                      <span className="text-[11px] text-emerald-400 font-medium">
-                        (Optimized)
-                      </span>
-                    )}
-                  </div>
-                  <div className="w-full bg-white/5 rounded-full h-1.5 mt-2 overflow-hidden">
-                    <div
-                      className={`h-full ${bedSaturation > 85 ? 'bg-red-500' : 'bg-amber-400'}`}
-                      style={{ width: `${bedSaturation}%` }}
-                    />
-                  </div>
+                      {c === 'starters' ? '1. Antipasti' : c === 'pasta' ? '2. Primi' : c === 'entree' ? '3. Secondi' : '4. Dolci'}
+                    </button>
+                  ))}
                 </div>
 
-                <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
-                  <span className="text-xs text-zinc-400 block font-mono">Ventilator Demand</span>
-                  <span className="text-2xl font-bold text-cyan-300 font-display mt-1">
-                    {ventilatorNeed}%
-                  </span>
-                  <span className="text-[11px] text-zinc-400 mt-1 block">
-                    {criticalQueue} critical patients in queue
-                  </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  {menuItems[course].map((dish, i) => (
+                    <div key={i} className="p-4 rounded-xl bg-white/[0.03] border border-white/10 flex flex-col justify-between">
+                      <div>
+                        <div className="flex justify-between items-baseline mb-1">
+                          <h5 className="font-semibold text-sm text-white">{dish.name}</h5>
+                          <span className="font-mono text-amber-300 text-sm font-bold">{dish.price}</span>
+                        </div>
+                        <p className="text-xs text-zinc-400 leading-relaxed">{dish.desc}</p>
+                      </div>
+                      <div className="pt-3 flex items-center gap-2 text-[11px] text-zinc-500 font-mono">
+                        <Check className="w-3 h-3 text-emerald-400" />
+                        <span>Fresh artisanal preparation</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Action Button for simulation */}
-              <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl bg-white/[0.02] border border-white/5">
-                <p className="text-xs text-zinc-400">
-                  Algorithmic triage redistribution reclaims secondary recovery bays into high-dependency units.
-                </p>
-                <button
-                  onClick={() => setBedRebalanced(true)}
-                  disabled={bedRebalanced}
-                  className="px-4 py-2 text-xs font-semibold text-zinc-950 bg-cyan-400 hover:bg-cyan-300 disabled:bg-zinc-700 disabled:text-zinc-400 rounded-lg transition-colors flex items-center gap-1.5"
-                >
-                  <RefreshCw className="w-3.5 h-3.5" />
-                  {bedRebalanced ? 'Beds Dynamically Reallocated' : 'Execute Triage Rebalance'}
-                </button>
+              {/* Table Booking Configuration */}
+              <div className="glass-card p-5 rounded-2xl border border-white/10 space-y-4">
+                <h4 className="text-xs font-mono uppercase tracking-wider text-amber-300 flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-amber-400" />
+                  <span>Reserve an Evening at L'Amore</span>
+                </h4>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div>
+                    <label className="text-xs text-zinc-400 block mb-1.5 flex items-center gap-1.5">
+                      <Users className="w-3.5 h-3.5" /> Party Size
+                    </label>
+                    <div className="grid grid-cols-4 gap-1">
+                      {[2, 4, 6, 8].map((num) => (
+                        <button
+                          key={num}
+                          onClick={() => {
+                            setPartySize(num);
+                            setBookingConfirmed(false);
+                          }}
+                          className={`py-1.5 rounded-lg text-xs font-mono font-medium border transition-colors ${
+                            partySize === num
+                              ? 'bg-amber-400 text-zinc-950 font-bold border-amber-300'
+                              : 'bg-white/[0.04] text-zinc-300 border-white/10 hover:bg-white/10'
+                          }`}
+                        >
+                          {num}p
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-zinc-400 block mb-1.5 flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5" /> Dining Ambience
+                    </label>
+                    <select
+                      value={seatingZone}
+                      onChange={(e) => {
+                        setSeatingZone(e.target.value as any);
+                        setBookingConfirmed(false);
+                      }}
+                      className="w-full bg-zinc-900 border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400"
+                    >
+                      <option value="Main Dining Room">Main Dining Room</option>
+                      <option value="Veranda Terrace">Veranda Terrace</option>
+                      <option value="Chef's Wine Cellar">Chef's Wine Cellar (Private)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-zinc-400 block mb-1.5 flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5" /> Seating Slot
+                    </label>
+                    <div className="grid grid-cols-3 gap-1">
+                      {['18:30', '19:30', '21:00'].map((time) => (
+                        <button
+                          key={time}
+                          onClick={() => {
+                            setSelectedTime(time);
+                            setBookingConfirmed(false);
+                          }}
+                          className={`py-1.5 rounded-lg text-xs font-mono font-medium border transition-colors ${
+                            selectedTime === time
+                              ? 'bg-amber-400 text-zinc-950 font-bold border-amber-300'
+                              : 'bg-white/[0.04] text-zinc-300 border-white/10 hover:bg-white/10'
+                          }`}
+                        >
+                          {time}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Booking status confirmation preview */}
+                <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                  <div className="text-xs text-zinc-300 font-mono">
+                    Reservation: <span className="text-white font-semibold">{partySize} Guests</span> ·{' '}
+                    <span className="text-amber-300 font-medium">{seatingZone}</span> at{' '}
+                    <span className="text-white font-semibold">{selectedTime}</span>
+                  </div>
+
+                  <button
+                    onClick={() => setBookingConfirmed(true)}
+                    className="px-4 py-2 rounded-lg text-xs font-semibold bg-gradient-to-r from-amber-400 to-yellow-300 text-zinc-950 hover:brightness-110 shadow-sm transition-all flex items-center gap-1.5"
+                  >
+                    <BookmarkCheck className="w-3.5 h-3.5" />
+                    <span>{bookingConfirmed ? 'Reservation Confirmed ✓' : 'Simulate Confirmation'}</span>
+                  </button>
+                </div>
+
+                {bookingConfirmed && (
+                  <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-xs text-emerald-300 flex items-center gap-2 animate-in fade-in duration-300">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Table verified for {partySize} guests in {seatingZone} at {selectedTime}. Digital concierge invitation generated.</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'interactive' && project.id === 'student-cafe' && (
+            <div className="space-y-6">
+              <div className="p-4 rounded-xl bg-cyan-950/30 border border-cyan-500/30 flex items-start gap-3">
+                <Coffee className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
+                <div className="text-xs space-y-1">
+                  <p className="font-semibold text-cyan-300">
+                    Campus Brew — Student Friendly Cafe Showcase
+                  </p>
+                  <p className="text-zinc-400">
+                    Designed to provide SRM undergraduates with instant pricing transparency, cozy study zone reservations, and quick pick-up combos.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {[
+                  { id: 'study', title: 'Late Night Exam Cram', items: 'Cold Brew + Cinnamon Roll', price: '₹149' },
+                  { id: 'lunch', title: 'Campus Power Lunch', items: 'Grilled Panini + Mint Lemonade', price: '₹189' },
+                  { id: 'express', title: 'Between-Class Express', items: 'Double Espresso + Croissant', price: '₹119' },
+                ].map((tier) => (
+                  <div
+                    key={tier.id}
+                    onClick={() => setCafeCombo(tier.id as any)}
+                    className={`p-4 rounded-xl border cursor-pointer transition-all ${
+                      cafeCombo === tier.id
+                        ? 'bg-cyan-500/10 border-cyan-400 text-white shadow-md'
+                        : 'bg-white/[0.02] border-white/10 text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex justify-between items-baseline mb-2">
+                      <h5 className="font-semibold text-sm text-white">{tier.title}</h5>
+                      <span className="font-mono text-cyan-300 text-xs font-bold">{tier.price}</span>
+                    </div>
+                    <p className="text-xs text-zinc-400">{tier.items}</p>
+                    <div className="mt-3 text-[10px] font-mono text-cyan-400 flex items-center gap-1">
+                      <Check className="w-3 h-3" /> Student ID Discount Eligible
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}

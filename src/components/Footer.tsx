@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
             </span>
             <span className="text-zinc-600">/</span>
             <span className="text-xs text-zinc-400">
-              Systems & Web Developer · SRM University, Chennai
+              Computer Science Undergraduate & Web Developer · SRM University, Chennai
             </span>
           </div>
 

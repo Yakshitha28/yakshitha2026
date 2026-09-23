@@ -166,8 +166,8 @@ export const About: React.FC = () => {
                   <span className="text-[11px] text-zinc-400">B.Tech CSE Core</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 text-center">
-                  <span className="font-display text-2xl font-bold text-cyan-400 block">VIT Hack</span>
-                  <span className="text-[11px] text-zinc-400">Resonance 1.0 Finalist</span>
+                  <span className="font-display text-2xl font-bold text-amber-400 block">L'Amore</span>
+                  <span className="text-[11px] text-zinc-400">Web Platform Dev</span>
                 </div>
               </div>
             </div>

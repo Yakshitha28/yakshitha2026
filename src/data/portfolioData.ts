@@ -4,7 +4,7 @@ export const PERSONAL_INFO = {
   name: 'Yakshitha Sri N D',
   shortName: 'Yakshitha',
   brandLogo: 'Yakshitha.',
-  title: 'Systems & Web Developer',
+  title: 'Computer Science Undergraduate & Web Developer',
   subtitle: 'CS Undergrad @ SRM Institute of Science & Technology, Chennai',
   taglineTopRight: 'Turning ideas into reality',
   hireTagline: 'Available for hire — building fast, resilient web applications & simulation engines using modern tech stacks.',
@@ -15,7 +15,8 @@ export const PERSONAL_INFO = {
   linkedin: 'https://linkedin.com/in/yakshitha-sri',
   linkedinDisplay: 'linkedin.com/in/Yakshitha Sri',
   location: 'Chennai, Tamil Nadu, India',
-  avatarImage: '/assets/yakshitha_portrait_1790106364277.jpg',
+  avatarImage: '/assets/yakshitha_photo_portrait_1790148721600.jpg',
+  heroBgImage: '/assets/hero_dark_tech_bg_1790148457619.jpg',
   aboutBio:
     'First-year Computer Science and Engineering (Core) undergraduate student at SRM Institute of Science and Technology, Chennai (B.Tech CSE, 2026–2030). Passionate about low-level systems programming, clean data structures, and web simulation engines. Combines analytical problem solving with modern front-end craftsmanship to build fast, intuitive, and human-centric software solutions.',
   education: [
@@ -56,7 +57,7 @@ export const TECHNOLOGIES_MARQUEE = [
   { name: 'Computer Vision', icon: 'Eye', category: 'AI & Data' },
   { name: 'Prompt Engineering', icon: 'Zap', category: 'AI Tools' },
   { name: 'VS Code & CLI', icon: 'TerminalSquare', category: 'Workflow' },
-  { name: 'Web Simulation Engines', icon: 'Activity', category: 'Systems' },
+  { name: 'Web Application Architecture', icon: 'Layers', category: 'Systems' },
 ];
 
 export const ROADMAP_STEPS: RoadmapStep[] = [
@@ -129,38 +130,38 @@ export const ROADMAP_STEPS: RoadmapStep[] = [
 
 export const PROJECTS: Project[] = [
   {
-    id: 'codered',
-    title: 'CodeRed — Crisis Surge Simulator',
-    tagline: 'Hospital triage & resource allocation simulation engine',
-    badge: 'Featured Spotlight · VIT Hackathon Resonance 1.0',
+    id: 'lamore-restaurant',
+    title: "L'Amore Restaurant — Culinary Experience & Dining Portal",
+    tagline: 'Luxury fine-dining digital portal & interactive table reservation platform',
+    badge: "Featured Spotlight · L'Amore Web Platform",
     featured: true,
     description:
-      'A real-time emergency healthcare simulation platform built for VIT Hackathon Resonance 1.0 to model hospital patient inflow surges, dynamic bed occupancy, and crisis triage prioritization during catastrophe scenarios.',
+      "A sophisticated, modern digital dining platform designed for L'Amore Restaurant. Features an interactive gourmet menu, dynamic table booking system with seating tier selection, chef signatures showcase, and seamless responsive design.",
     longDescription:
-      'CodeRed was developed to tackle severe hospital resource bottlenecks during medical emergencies. Using algorithmic triage prioritization and real-time bed tracking algorithms, CodeRed simulates emergency room patient influx, calculates critical survival metrics, and redistributes ICU capacity dynamically. Built with an interactive glassmorphic dashboard that enables hospital incident commanders to stress-test capacity limits.',
-    image: '/assets/codered_simulator_1790106376871.jpg',
-    technologies: ['Python', 'Simulation Algorithms', 'HTML5/CSS3', 'Real-time Metrics', 'Crisis Triage Logic'],
-    githubUrl: 'https://github.com/Yakshitha28/codered-hospital-simulator',
-    demoUrl: '#demo-codered',
-    interactiveType: 'codered',
+      "L'Amore Restaurant was architected to deliver an immersive, fine-dining web presence. Engineered with contemporary responsive web standards, it integrates an elegant course-by-course menu explorer (starters, artisanal pasta, chef entrees, patisserie desserts), an interactive reservation engine with guest party sizing & seating zone selection, wine pairing suggestions, and refined amber-gold dark aesthetics.",
+    image: '/assets/lamore_restaurant_web_1790149038225.jpg',
+    technologies: ['HTML5', 'CSS3', 'Modern JavaScript', 'Responsive Design', 'Interactive Reservation UX', 'UI/UX Craftsmanship'],
+    githubUrl: 'https://github.com/Yakshitha28/lamore-restaurant',
+    demoUrl: '#demo-lamore',
+    interactiveType: 'lamore',
     metrics: [
-      { label: 'Event', value: 'Resonance 1.0' },
-      { label: 'Triage Response', value: '< 150ms' },
-      { label: 'Capacity Influx', value: '400% Peak' },
-      { label: 'Bed Utilization', value: '98.4% Opt' },
+      { label: 'Cuisine Style', value: 'Contemporary Fine Dining' },
+      { label: 'Booking Flow', value: 'Instant Confirmation' },
+      { label: 'Menu Curation', value: '4 Course Tiers' },
+      { label: 'Responsiveness', value: '100% Mobile & Desktop' },
     ],
     keyFeatures: [
-      'Dynamic triage prioritization algorithm mapping patient severity indexes to available treatment bays',
-      'Real-time crisis surge slider simulating sudden casualty spikes (e.g. industrial hazards, traffic disasters)',
-      'Visual bed status heatmap with automated warnings for ICU and ventilator exhaustion',
-      'Exportable incident logs and automated patient survival rate analytics',
+      'Interactive multi-course culinary explorer with ingredient breakdowns and sommelier wine pairings',
+      'Table reservation engine supporting party sizes, customized seating zones (indoor/terrace/private booth), and time slot selection',
+      'Atmospheric dark-mode aesthetic with warm amber-gold accents and smooth micro-interactions',
+      'Fully responsive, accessible design with zero layout shift and rapid asset loading',
     ],
   },
   {
     id: 'student-cafe',
     title: 'Campus Brew — Student Friendly Cafe',
     tagline: 'Atmospheric digital storefront & reservation interface',
-    badge: 'Core Web Project · Resume Feature',
+    badge: 'Core Web Project · Campus Community',
     featured: false,
     description:
       'An engaging, welcoming web platform designed specifically for university students. Features an organized digital menu, study ambience showcase, affordable student combos, and quick table inquiry mechanics.',
@@ -184,44 +185,16 @@ export const PROJECTS: Project[] = [
       'Fully responsive CSS grid and flexbox architecture calibrated for on-the-go mobile orders',
     ],
   },
-  {
-    id: 'biteflow',
-    title: 'BiteFlow — Food Ordering Platform',
-    tagline: 'Streamlined meal browsing & cart checkout experience',
-    badge: 'Web Application · Resume Feature',
-    featured: false,
-    description:
-      'A sleek, responsive online food ordering portal that lets users effortlessly browse categorized dishes, customize toppings, manage their shopping basket, and review itemized order bills.',
-    longDescription:
-      'Crafted to streamline online food delivery workflows with zero visual clutter. Features structured category filtering (quick bites, meal combos, healthy bowls, desserts), real-time cart subtotal computations, and clean CSS-driven transitions. Engineered with user-friendly form controls and visual cards for optimal conversion.',
-    image: '/assets/food_ordering_web_1790106400259.jpg',
-    technologies: ['HTML5', 'CSS3', 'JavaScript', 'DOM State Machine', 'Mobile Cart UX'],
-    githubUrl: 'https://github.com/Yakshitha28/food-ordering-website',
-    demoUrl: '#demo-food',
-    interactiveType: 'food',
-    metrics: [
-      { label: 'Categories', value: '6 Curated' },
-      { label: 'Checkout Steps', value: '2 Fast Clicks' },
-      { label: 'Interface', value: 'Minimalist Clean' },
-      { label: 'Cart Latency', value: '0ms Client State' },
-    ],
-    keyFeatures: [
-      'Organized dish classification enabling patrons to filter meals in seconds',
-      'Interactive cart drawer with dynamic quantity adjusters and instant subtotal recalculations',
-      'Clean high-contrast typography ensuring effortless legibility under varying lighting conditions',
-      'Resilient styling using modern CSS custom properties and flexible mobile-first layouts',
-    ],
-  },
 ];
 
 export const CERTIFICATIONS: Certification[] = [
   {
     id: 'c1',
-    title: 'VIT Hackathon Resonance 1.0 Finalist',
-    issuer: 'Vellore Institute of Technology (VIT) & Resonance Tech Committee',
-    date: 'Resonance 1.0 Edition',
-    skills: ['Hospital Crisis Simulation', 'Algorithmic Triage', 'Rapid Prototyping', 'Team Engineering'],
-    category: 'Hackathon',
+    title: 'Full-Stack Web Architecture & Responsive Systems',
+    issuer: 'Web Development & UI Engineering Standards',
+    date: 'Verified Practical Portfolio',
+    skills: ['Modern HTML5/CSS3', 'Component UI Architecture', 'Responsive Layouts', 'Client Interaction Design'],
+    category: 'Web',
   },
   {
     id: 'c2',
@@ -253,6 +226,6 @@ export const CERTIFICATIONS: Certification[] = [
     issuer: 'Developer Tooling & Workflow Verification',
     date: 'Version Control Standards',
     skills: ['Git Branching', 'GitHub Repository Governance', 'Terminal CLI', 'VS Code Workflow'],
-    category: 'Tools' as any,
+    category: 'Web',
   },
 ];
