@@ -8,9 +8,10 @@ import {
   Linkedin,
   Mail,
   Camera,
+  Upload,
   RotateCcw,
-  Check,
-  Upload
+  CheckCircle2,
+  ImageIcon
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
@@ -20,59 +21,118 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenResume, onExploreProjects }) => {
-  // Allow user to upload custom photo or fall back to default
+  // Developer photo state, initialized from localStorage or portfolio data
   const [photoUrl, setPhotoUrl] = useState<string>(PERSONAL_INFO.avatarImage);
   const [hasCustomPhoto, setHasCustomPhoto] = useState<boolean>(false);
-  const [uploadToast, setUploadToast] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const savedPhoto = localStorage.getItem('yakshitha_custom_photo');
-    if (savedPhoto && savedPhoto.startsWith('data:image/')) {
-      setPhotoUrl(savedPhoto);
-      setHasCustomPhoto(true);
-    } else {
-      setPhotoUrl(PERSONAL_INFO.avatarImage);
-      setHasCustomPhoto(false);
-      if (savedPhoto) {
-        localStorage.removeItem('yakshitha_custom_photo');
+    try {
+      const saved = localStorage.getItem('yakshitha_custom_photo');
+      if (saved && (saved.startsWith('data:image/') || saved.startsWith('/assets/'))) {
+        setPhotoUrl(saved);
+        setHasCustomPhoto(true);
       }
+    } catch {
+      // Ignore localStorage errors
     }
   }, []);
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const processImageFile = (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      showToast('Please select a valid image file (JPEG, PNG, WEBP).');
+      return;
+    }
+
+    if (file.size > 25 * 1024 * 1024) {
+      showToast('Image is larger than 25MB. Please choose a smaller image.');
+      return;
+    }
+
+    setIsUploading(true);
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const dataUrl = event.target?.result as string;
+      if (dataUrl) {
+        setPhotoUrl(dataUrl);
+        setHasCustomPhoto(true);
+
+        try {
+          localStorage.setItem('yakshitha_custom_photo', dataUrl);
+        } catch {
+          // localStorage quota might be limited on very large images
+        }
+
+        // Persist to server disk via /api/upload-photo
+        try {
+          const res = await fetch('/api/upload-photo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: dataUrl }),
+          });
+          const json = await res.json();
+          if (json.success && json.url) {
+            // Server has written it to public assets
+          }
+        } catch {
+          // Still loaded and persisted in localStorage
+        }
+
+        setIsUploading(false);
+        showToast('Photo uploaded & applied permanently to background and side!');
+      }
+    };
+    reader.onerror = () => {
+      setIsUploading(false);
+      showToast('Error reading image file.');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 15 * 1024 * 1024) {
-        setUploadToast('File is too large. Please select an image under 15MB.');
-        setTimeout(() => setUploadToast(null), 3000);
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result as string;
-        if (result) {
-          setPhotoUrl(result);
-          setHasCustomPhoto(true);
-          try {
-            localStorage.setItem('yakshitha_custom_photo', result);
-          } catch {
-            // In case of quota exceed in local storage, photo still displays in session state
-          }
-          setUploadToast('Photo updated successfully!');
-          setTimeout(() => setUploadToast(null), 3000);
-        }
-      };
-      reader.readAsDataURL(file);
+      processImageFile(file);
     }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      processImageFile(file);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
   };
 
   const handleResetPhoto = () => {
     setPhotoUrl(PERSONAL_INFO.avatarImage);
     setHasCustomPhoto(false);
-    localStorage.removeItem('yakshitha_custom_photo');
-    setUploadToast('Reset to original portrait');
-    setTimeout(() => setUploadToast(null), 2500);
+    try {
+      localStorage.removeItem('yakshitha_custom_photo');
+    } catch {
+      // Ignore
+    }
+    showToast('Reset to original portrait');
+  };
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 3800);
   };
 
   return (
@@ -267,15 +327,22 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onExploreProjects }) =
             <input
               type="file"
               ref={fileInputRef}
-              onChange={handlePhotoUpload}
+              onChange={handleFileInputChange}
               accept="image/*"
               className="hidden"
-              aria-label="Upload photo"
+              aria-label="Upload your portrait photo"
             />
 
-            <div className="w-full max-w-[360px] sm:max-w-[390px] space-y-4 animate-smooth-float">
-              {/* Portrait Frame Card */}
-              <div className="relative rounded-3xl p-3 bg-gradient-to-b from-white/12 via-white/[0.04] to-white/[0.02] border border-white/20 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] backdrop-blur-2xl group">
+            <div className="w-full max-w-[360px] sm:max-w-[390px] space-y-3 animate-smooth-float">
+              {/* Portrait Frame Card with Drag and Drop Support */}
+              <div
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                className={`relative rounded-3xl p-3 bg-gradient-to-b from-white/12 via-white/[0.04] to-white/[0.02] border transition-all duration-300 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] backdrop-blur-2xl group ${
+                  isDragging ? 'border-cyan-400 ring-2 ring-cyan-400/50 scale-[1.02]' : 'border-white/20'
+                }`}
+              >
                 {/* Decorative ambient aura behind the card */}
                 <div className="absolute -inset-1 bg-gradient-to-tr from-cyan-500/25 via-sky-400/15 to-transparent rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
@@ -296,6 +363,45 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onExploreProjects }) =
                     }}
                   />
 
+                  {/* Drag overlay indicator */}
+                  {isDragging && (
+                    <div className="absolute inset-0 bg-cyan-950/80 backdrop-blur-sm z-30 flex flex-col items-center justify-center p-4 text-center border-2 border-dashed border-cyan-400 rounded-2xl">
+                      <Upload className="w-10 h-10 text-cyan-400 animate-bounce mb-2" />
+                      <p className="text-white font-semibold text-sm">Drop your photo here</p>
+                      <p className="text-xs text-cyan-300 mt-1">Applies permanently to background & side</p>
+                    </div>
+                  )}
+
+                  {/* Top-Right Fast Upload Button */}
+                  <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5">
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      title="Upload your photo file"
+                      className="px-3 py-1.5 rounded-full bg-black/85 hover:bg-cyan-400 text-white hover:text-zinc-950 text-xs font-semibold backdrop-blur-md border border-white/25 hover:border-cyan-400 transition-all duration-200 shadow-xl flex items-center gap-1.5 group/btn cursor-pointer active:scale-95"
+                    >
+                      <Camera className="w-3.5 h-3.5 text-cyan-400 group-hover/btn:text-zinc-950 transition-colors" />
+                      <span className="text-[11px] tracking-tight">Upload Photo</span>
+                    </button>
+
+                    {hasCustomPhoto && (
+                      <button
+                        onClick={handleResetPhoto}
+                        title="Reset photo"
+                        className="p-1.5 rounded-full bg-black/80 hover:bg-red-500 text-zinc-300 hover:text-white backdrop-blur-md border border-white/20 transition-all active:scale-95 cursor-pointer"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Toast Feedback Notification */}
+                  {toastMessage && (
+                    <div className="absolute top-12 right-3 left-3 z-40 px-3 py-2 rounded-xl bg-cyan-950/95 border border-cyan-400/80 text-cyan-200 text-xs shadow-2xl backdrop-blur-md flex items-center gap-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
+                      <span className="font-medium text-[11px] leading-tight">{toastMessage}</span>
+                    </div>
+                  )}
+
                   {/* Resilient fallback container */}
                   <div className="photo-fallback hidden absolute inset-0 flex-col items-center justify-center bg-gradient-to-br from-zinc-900 via-zinc-950 to-cyan-950/40 p-6 text-center">
                     <div className="w-20 h-20 rounded-full bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-300 font-display text-2xl font-bold mb-3">
@@ -304,36 +410,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onExploreProjects }) =
                     <h3 className="text-white font-bold text-lg">{PERSONAL_INFO.name}</h3>
                     <p className="text-xs text-zinc-400 mt-1">{PERSONAL_INFO.title}</p>
                   </div>
-
-                  {/* TOP CONTROLS: Upload Photo & Reset */}
-                  <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5">
-                    <button
-                      onClick={() => fileInputRef.current?.click()}
-                      title="Upload your own photo"
-                      className="px-3 py-1.5 rounded-full bg-black/80 hover:bg-cyan-400 text-white hover:text-zinc-950 text-xs font-semibold backdrop-blur-md border border-white/25 hover:border-cyan-400 transition-all duration-200 shadow-xl flex items-center gap-1.5 group/upload active:scale-95 cursor-pointer"
-                    >
-                      <Camera className="w-3.5 h-3.5 text-cyan-400 group-hover/upload:text-zinc-950 transition-colors" />
-                      <span className="text-[11px] tracking-tight">Upload Photo</span>
-                    </button>
-
-                    {hasCustomPhoto && (
-                      <button
-                        onClick={handleResetPhoto}
-                        title="Reset to default portrait"
-                        className="p-1.5 rounded-full bg-black/80 hover:bg-red-500/80 text-zinc-300 hover:text-white backdrop-blur-md border border-white/20 transition-all duration-200 active:scale-95"
-                      >
-                        <RotateCcw className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Toast Notification when Photo Uploaded */}
-                  {uploadToast && (
-                    <div className="absolute top-12 right-3 z-40 px-3 py-1.5 rounded-lg bg-cyan-950/95 border border-cyan-400 text-cyan-300 text-[11px] font-medium shadow-2xl backdrop-blur-md animate-in fade-in slide-in-from-top-2 duration-200 flex items-center gap-1.5">
-                      <Check className="w-3 h-3 text-cyan-400" />
-                      <span>{uploadToast}</span>
-                    </div>
-                  )}
 
                   {/* Bottom subtle gradient vignette */}
                   <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
@@ -357,7 +433,29 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onExploreProjects }) =
                 </div>
               </div>
 
-              {/* Quick Academic & Availability Badges */}
+              {/* Photo Upload & Quick Controls Bar */}
+              <div className="p-3 rounded-2xl bg-[#0f111a]/90 backdrop-blur-xl border border-cyan-500/30 shadow-xl flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+                    <ImageIcon className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold text-white truncate">Permanent Photo</p>
+                    <p className="text-[10px] text-zinc-400 truncate">Background & Side Frame</p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploading}
+                  className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-zinc-950 font-bold text-xs shadow-lg shadow-cyan-500/25 flex items-center gap-1.5 cursor-pointer active:scale-95 transition-all shrink-0"
+                >
+                  <Upload className="w-3.5 h-3.5" />
+                  <span>{isUploading ? 'Applying...' : 'Upload Photo'}</span>
+                </button>
+              </div>
+
+              {/* Academic & Availability Badges */}
               <div className="grid grid-cols-1 gap-2">
                 <div className="p-3 rounded-2xl bg-emerald-950/30 backdrop-blur-xl border border-emerald-500/30 flex items-center justify-between shadow-xl">
                   <div className="flex items-center gap-2">

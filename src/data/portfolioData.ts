@@ -15,8 +15,8 @@ export const PERSONAL_INFO = {
   linkedin: 'https://linkedin.com/in/yakshitha-sri',
   linkedinDisplay: 'linkedin.com/in/Yakshitha Sri',
   location: 'Chennai, Tamil Nadu, India',
-  avatarImage: '/assets/yakshitha_photo_portrait_1790148721600.jpg',
-  heroBgImage: '/assets/hero_dark_tech_bg_1790148457619.jpg',
+  avatarImage: '/assets/yakshitha_official_portrait_1790187038965.jpg',
+  heroBgImage: '/assets/yakshitha_hero_backdrop_1790187057140.jpg',
   aboutBio:
     'First-year Computer Science and Engineering (Core) undergraduate student at SRM Institute of Science and Technology, Chennai (B.Tech CSE, 2026–2030). Passionate about low-level systems programming, clean data structures, and web simulation engines. Combines analytical problem solving with modern front-end craftsmanship to build fast, intuitive, and human-centric software solutions.',
   education: [
